@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   dynamic_reconfigure
   geometry_msgs
   tf2_ros
+  move_base_msgs
 )
 
 # 动态参数配置文件生成规则
@@ -169,4 +170,11 @@ target_link_libraries(ros_dynamic_speed_node ${catkin_LIBRARIES})
 # C++日志节点编译规则
 add_executable(ros_log src/ros_log.cpp)
 target_link_libraries(ros_log ${catkin_LIBRARIES})
-
+add_executable(ros_imu_rotate_node src/imu_rotate.cpp)
+target_link_libraries(ros_imu_rotate_node ${catkin_LIBRARIES})
+add_executable(ros_scan_node src/ros_scan.cpp)
+target_link_libraries(ros_scan_node ${catkin_LIBRARIES})
+add_executable(ros_avoid_node src/ros_avoid.cpp)
+target_link_libraries(ros_avoid_node ${catkin_LIBRARIES})
+add_executable(movebase_client_node src/movebase_client.cpp)
+target_link_libraries(movebase_client_node ${catkin_LIBRARIES})

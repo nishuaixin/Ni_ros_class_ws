@@ -1,0 +1,189 @@
+第二周
+# 创建工作空间
+cd ~/
+mkdir -p ros_class_ws/src
+cd ros_class_ws/src
+catkin_init_workspace
+cd ~/ros_class_ws
+catkin_make
+
+# 配置环境变量
+gedit ~/.bashrc
+source ~/.bashrc
+rospack profile
+
+# 创建功能包
+cd ~/ros_class_ws/src
+catkin_create_pkg my_class_pkg roscpp rospy std_msgs
+cd ~/ros_class_ws/
+catkin_make
+
+# 启动roscore
+roscore
+
+# 运行C++发布者/订阅者
+rosrun my_class_pkg ros_publisher_node
+rosrun my_class_pkg ros_subscriber_node
+
+# 运行Python发布者/订阅者
+rosrun my_class_pkg ros_publisher_node.py
+rosrun my_class_pkg ros_subscriber_node.py
+
+# 查看自定义消息
+rosmsg show my_class_pkg/MyMessage
+
+# 运行自定义消息C++节点
+rosrun my_class_pkg msg_publisher_node
+rosrun my_class_pkg msg_subscriber_node
+
+# 启动launch文件
+roslaunch my_class_pkg bringup_topic.launch
+
+# 服务相关
+rossrv show my_class_pkg/MyServiceMsg
+rosrun my_class_pkg ros_server_node
+rosrun my_class_pkg ros_client_node
+rosrun my_class_pkg ros_server.py
+rosrun my_class_pkg ros_client.py
+
+# 动作相关
+rosrun my_class_pkg ros_action_server
+rosrun my_class_pkg ros_action_client
+rosrun my_class_pkg ros_action_server.py
+rosrun my_class_pkg ros_action_client.py
+
+# 机器人硬件启动
+roslaunch upros_bringup bringup_w2a.launch
+
+第三周
+# 运行参数节点
+rosrun my_class_pkg ros_param
+
+# 运行Python参数节点
+rosrun my_class_pkg ros_param.py
+
+# 启动launch
+roslaunch my_class_pkg parameter.launch
+
+# 动态参数
+rosrun my_class_pkg dynamic_reconfigure_node
+rosrun rqt_reconfigure rqt_reconfigure
+
+# 动态速度控制
+rosrun my_class_pkg ros_dynamic_speed_node
+rosrun turtlesim turtlesim_node
+
+# 日志节点
+rosrun my_class_pkg ros_log
+rosrun my_class_pkg ros_log.py
+
+# rqt工具
+rqt_graph
+rqt_plot
+rqt_bag
+rosrun rqt_image_view rqt_image_view
+rosrun rqt_tf_tree rqt_tf_tree
+rqt_console
+
+# rviz
+rviz
+
+# 录制与播放bag
+rosbag record /scan
+rosbag play xxx.bag
+
+
+第四周
+# 安装依赖
+sudo apt install git
+sudo apt-get install ros-noetic-teleop-twist-keyboard ros-noetic-joint-state-controller ros-noetic-effort-controllers ros-noetic-position-controllers ros-noetic-joint-trajectory-controller ros-noetic-controller-manager ros-noetic-gazebo-ros-control ros-noetic-ros-controllers ros-noetic-rqt-joint-trajectory-controller ros-noetic-rqt-controller-manager 'ros-noetic-gazebo-*' ros-noetic-gmapping ros-noetic-navigation 'ros-noetic-moveit-*'
+
+# 下载仿真包
+cd ~/
+git clone https://gitee.com/song_gang/upros_sim.git
+cd upros_sim
+catkin_make
+source ~/upros_sim/devel/setup.bash
+rospack profile
+
+# 启动仿真
+roslaunch zx_description w2a.launch
+
+# 建图
+roslaunch zx_description gmapping.launch
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+roslaunch zx_description save_map.launch
+
+# 导航
+roslaunch zx_description navigation.launch
+
+# 机械臂控制
+rosrun rqt_joint_trajectory_controller rqt_joint_trajectory_controller
+
+第五周
+# 相机驱动
+roslaunch orbbec_camera dabai_dcw2.launch
+rosrun rqt_image_view rqt_image_view
+
+# 图像处理节点
+rosrun my_class_pkg get_ros_image.py
+
+# 颜色标定
+rosrun upros_cv color_choose.py
+
+# 巡线
+rosrun my_class_pkg follow_line.py
+rostopic pub -1 /enable_move std_msgs/Int16 "data: 1"
+
+# 手势识别
+rosrun my_class_pkg gesture_movement.py
+
+# AprilTag跟踪
+rosrun my_class_pkg apriltag_follow.py
+
+# 视觉抓取
+roslaunch upros_arm recognize_apriltag.launch
+rosrun my_class_pkg tag_grab_node
+
+第六周
+# IMU数据读取
+rosrun my_class_pkg ros_imu_node
+
+# IMU自旋180度
+rosrun my_class_pkg ros_imu_rotate_node
+
+# 激光雷达驱动
+roscd bluesea2/
+cd ~/upros_class_code && catkin_make
+git clone https://gitee.com/song_gang/bluesea.git
+source ~/.bashrc
+rospack profile
+
+# 启动雷达
+roslaunch upros_bringup bringup_w2a.launch
+rviz
+
+# 雷达数据获取
+rosrun my_class_pkg ros_scan_node
+
+# 雷达避障
+rosrun my_class_pkg ros_avoid_node
+
+# 雷达角度屏蔽测试
+cd ~/upros_class_code/test_shell/w2a/
+./5-mapping.sh
+
+# SLAM建图
+roslaunch upros_navigation gmapping.launch
+roslaunch upros_navigation view_nav.launch
+rosrun upros_move_linear teleop_twist_keyboard.py
+roslaunch upros_navigation save_map.launch
+
+# 自主导航
+roslaunch upros_navigation navigation.launch
+
+# 导航点标记
+rosrun upros_transform tf_echo_node
+
+# 发送导航点
+rosrun my_class_pkg movebase_client_node
