@@ -1,13 +1,10 @@
-# ROS 编译产物（必须排除，体积大且环境相关）
-build/
+# ROS编译产物
 devel/
+build/
 install/
-# Python 缓存文件
-__pycache__/
-*.pyc
-# IDE 配置文件（可选）
-.vscode/
-.idea/
-# 临时/日志文件
-*.log
+*.catkin_workspace
+
+# 临时文件
 *.swp
+*.tmp
+.DS_Store

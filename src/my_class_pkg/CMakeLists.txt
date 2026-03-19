@@ -83,6 +83,29 @@ add_executable(ros_action_server src/ros_action_server.cpp)
 target_link_libraries(ros_action_server ${catkin_LIBRARIES})
 add_executable(ros_action_client src/ros_action_client.cpp)
 target_link_libraries(ros_action_client ${catkin_LIBRARIES})
+# 1. 碰撞传感器数据订阅
+add_executable(ros_bump_node src/ros_bump.cpp)
+target_link_libraries(ros_bump_node ${catkin_LIBRARIES})
+
+# 2. 碰撞传感器避障控制
+add_executable(bump_run_node src/bump_run.cpp)
+target_link_libraries(bump_run_node ${catkin_LIBRARIES})
+
+# 3. 超声-TOF传感器数据订阅
+add_executable(ros_sonic_node src/ros_sonic.cpp)
+target_link_libraries(ros_sonic_node ${catkin_LIBRARIES})
+
+# 4. TOF传感器避障控制
+add_executable(tof_back_node src/tof_back.cpp)
+target_link_libraries(tof_back_node ${catkin_LIBRARIES})
+
+# 5. IMU传感器数据订阅
+add_executable(ros_imu_node src/ros_imu.cpp)
+target_link_libraries(ros_imu_node ${catkin_LIBRARIES})
+
+# 6. IMU原地180°自旋控制
+add_executable(imu_180_node src/imu_180.cpp)
+target_link_libraries(imu_180_node ${catkin_LIBRARIES})
 
 # 关键：确保节点编译依赖消息生成（Noetic 必加）
 add_dependencies(msg_publisher_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
