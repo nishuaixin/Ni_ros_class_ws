@@ -1,0 +1,25 @@
+<launch>
+    <!-- 加载URDF到参数服务器 -->
+    <param name="robot_description" 
+           textfile="$(find Ni_robot_description)/urdf/simple_robot.urdf" />
+
+    <!-- 启动joint_state_publisher，发布关节状态（解决TF缺失的关键！） -->
+    <node name="joint_state_publisher" 
+          pkg="joint_state_publisher" 
+          type="joint_state_publisher" 
+          output="screen">
+        <param name="use_gui" value="true"/> <!-- 可选：打开关节控制GUI -->
+    </node>
+
+    <!-- 启动robot_state_publisher，发布TF变换 -->
+    <node name="robot_state_publisher" 
+          pkg="robot_state_publisher" 
+          type="robot_state_publisher" 
+          output="screen"/>
+
+    <!-- 启动RViz -->
+    <node name="rviz" 
+          pkg="rviz" 
+          type="rviz" 
+          output="screen"/>
+</launch>

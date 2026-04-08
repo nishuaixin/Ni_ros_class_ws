@@ -1,0 +1,11 @@
+<launch>
+  <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+
+  <!-- 加载 xacro 而不是 urdf -->
+  <param name="robot_description" command="xacro $(find Ni_robot_description)/urdf/simple_robot.xacro"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+  <node name="spawn_model" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -model my_robot -param robot_description"/>
+</launch>

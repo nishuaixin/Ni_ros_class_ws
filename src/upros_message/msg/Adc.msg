@@ -1,0 +1,12 @@
+int16 ad1
+int16 ad2
+int16 ad3
+int16 ad4
+int16 ad5
+int16 ad6
+int16 ad7
+int16 ad8
+int16 ad9
+int16 ad10
+int16 ad11
+int16 ad12

@@ -1,0 +1,7 @@
+<launch>
+    <!-- 启动参数节点，设置私有参数my_param -->
+    <node name="parameter" pkg="my_class_pkg" type="ros_param" output="screen">
+        <param name="my_param" value="ros!!!!"/>
+    </node>
+</launch>
+
