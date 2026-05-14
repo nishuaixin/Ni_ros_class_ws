@@ -187,3 +187,28 @@ rosrun upros_transform tf_echo_node
 
 # 发送导航点
 rosrun my_class_pkg movebase_client_node
+
+最终考核：roslaunch upros_bringup bringup_w2a.launch
+
+roslaunch upros_navigation navigation.launch
+
+roslaunch upros_chat word_to_speech.launch
+
+roslaunch upros_arm recognize_apriltag.launch
+
+roslaunch upros_navigation view_nav.launch
+
+//rosrun my_class_pkg auto_task_fast_four_points.py
+
+rosrun my_class_pkg auto_task_fast_four_points.py _route:=2
+
+chmod a+x ~/Ni_ros_class_ws/src/my_class_pkg/scripts/auto_task_four_points.py
+
+
+roscd my_class_pkg/scripts
+
+
+一键启动：
+roslaunch my_class_pkg auto_task_all_in_one.launch route:=2
+
+roslaunch my_class_pkg auto_task_all_in_one.launch route:=1
