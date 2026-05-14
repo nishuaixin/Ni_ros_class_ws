@@ -1,0 +1,36 @@
+<launch>
+  <!-- 可选择路线：1 或 2 -->
+  <arg name="route" default="1" />
+
+  <!-- 1. 启动底盘 -->
+  <include file="$(find upros_bringup)/launch/bringup_w2a.launch" />
+
+  <!-- 等待底盘参数（用 ROS 原生 wait_for_parameter 替换） -->
+  <param name="wait_for_bringup" value="true" type="bool" />
+  <wait_for_parameter name="/wait_for_bringup" timeout="30" />
+
+  <!-- 延时 5 秒（用 ROS 原生延时节点） -->
+  <node name="sleep_5s" pkg="rostopic" type="rostopic" args="wait /ready -r 1 --timeout 5" />
+
+  <!-- 2. 启动导航 -->
+  <include file="$(find upros_navigation)/launch/navigation.launch" />
+  <node name="sleep_8s" pkg="rostopic" type="rostopic" args="wait /ready -r 1 --timeout 8" />
+
+  <!-- 3. 启动语音合成 -->
+  <include file="$(find upros_chat)/launch/word_to_speech.launch" />
+  <node name="sleep_3s" pkg="rostopic" type="rostopic" args="wait /ready -r 1 --timeout 3" />
+
+  <!-- 4. 启动AprilTag识别 -->
+  <include file="$(find upros_arm)/launch/recognize_apriltag.launch" />
+  <node name="sleep_4s" pkg="rostopic" type="rostopic" args="wait /ready -r 1 --timeout 4" />
+
+  <!-- 5. 启动导航可视化 -->
+  <include file="$(find upros_navigation)/launch/view_nav.launch" />
+  <node name="sleep_3s_2" pkg="rostopic" type="rostopic" args="wait /ready -r 1 --timeout 3" />
+
+  <!-- 6. 最后启动自动任务（支持 route 参数） -->
+  <node pkg="my_class_pkg" type="auto_task_fast_four_points.py" name="auto_task" output="screen">
+    <param name="route" value="$(arg route)" />
+  </node>
+
+</launch>

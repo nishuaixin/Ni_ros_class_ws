@@ -1,0 +1,22 @@
+<launch>
+
+  <!-- 1. 启动机器人底盘 + 相机 + 激光雷达 -->
+  <include file="$(find upros_bringup)/launch/bringup_w2a.launch" />
+
+  <!-- 2. 启动导航（已正确加载你的地图） -->
+  <include file="$(find upros_navigation)/launch/navigation.launch" />
+
+  <!-- 3. 启动语音合成 -->
+  <include file="$(find upros_chat)/launch/word_to_speech.launch" />
+
+  <!-- 4. 启动 AprilTag 识别 -->
+  <include file="$(find upros_arm)/launch/recognize_apriltag.launch" />
+
+  <!-- 5. 启动自动导航 + 识别 + 语音播报主程序 -->
+  <node name="auto_four_points_task"
+        pkg="my_class_pkg"
+        type="auto_task_four_points.py"
+        output="screen"
+        launch-prefix="xterm -e" />
+
+</launch>
